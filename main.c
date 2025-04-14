@@ -21,29 +21,29 @@ read = getline(&line, &len, stdin);
 if (read == -1) /* Ctrl+D or error */
 {
 free(line);
-write(STDOUT_FILENO, "\n", 1);
+write(STDOUT_FILENO, "\n", 1);  /* Print a newline before exiting on Ctrl+D */
 break;
 }
 
-/* remove newline character */
+/* Remove newline character from input */
 if (line[read - 1] == '\n')
 line[read - 1] = '\0';
 
-if (strlen(line) == 0)
+if (strlen(line) == 0)  /* Skip empty lines */
 continue;
 
 argv[0] = line;
 argv[1] = NULL;
 
-if (fork() == 0)
+if (fork() == 0)  /* Create a child process */
 {
-execve(argv[0], argv, environ);
-perror("./shell");
+execve(argv[0], argv, environ);  /* Execute the command */
+perror("./shell");  /* Print an error if execve fails */
 exit(EXIT_FAILURE);
 }
 else
 {
-wait(NULL);
+wait(NULL);  /* Wait for the child process to finish */
 }
 }
 
