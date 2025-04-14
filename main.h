@@ -1,13 +1,12 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/**
- * main - Entry point of the shell
- * @argc: Argument count
- * @argv: Argument vector
- *
- * Return: 0 on success
- */
-int main(int argc, char **argv);
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/wait.h>
+
+extern char **environ;
 
 #endif /* MAIN_H */

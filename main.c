@@ -1,21 +1,51 @@
 #include "main.h"
 
-/**
-* main - Starts the simple shell
-* @argc: Number of arguments passed to the program
-* @argv: Array of strings containing the arguments
-*
-* Description: This is the entry point of the shell program.
-*              Currently, it does not perform any shell logic.
-*
-* Return: 0 on successful execution
-*/
-int main(int argc, char **argv)
-{
-(void)argc;
-(void)argv;
+#define PROMPT "#cisfun$ "
 
-/* Shell logic will go here later */
+/**
+* main - Simple UNIX shell
+* Return: 0 on success, 1 on failure
+*/
+int main(void)
+{
+char *line = NULL;
+size_t len = 0;
+ssize_t read;
+char *argv[2];
+
+while (1)
+{
+write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
+
+read = getline(&line, &len, stdin);
+if (read == -1) /* Ctrl+D or error */
+{
+free(line);
+write(STDOUT_FILENO, "\n", 1);
+break;
+}
+
+/* remove newline character */
+if (line[read - 1] == '\n')
+line[read - 1] = '\0';
+
+if (strlen(line) == 0)
+continue;
+
+argv[0] = line;
+argv[1] = NULL;
+
+if (fork() == 0)
+{
+execve(argv[0], argv, environ);
+perror("./shell");
+exit(EXIT_FAILURE);
+}
+else
+{
+wait(NULL);
+}
+}
 
 return (0);
 }
