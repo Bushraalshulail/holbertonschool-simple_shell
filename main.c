@@ -1,51 +1,36 @@
-#include "main.h"
-
-#define PROMPT "#cisfun$ "
+#include "shell.h"
 
 /**
-* main - Simple UNIX shell
-* Return: 0 on success, 1 on failure
-*/
+ * main - Entry point of the shell
+ *
+ * Return: Always 0
+ */
 int main(void)
 {
 char *line = NULL;
 size_t len = 0;
 ssize_t read;
-char *argv[2];
+char **args;
 
 while (1)
 {
-write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
+if (isatty(STDIN_FILENO))
+write(STDOUT_FILENO, "($) ", 4);
 
 read = getline(&line, &len, stdin);
-if (read == -1) /* Ctrl+D or error */
+if (read == -1)
 {
 free(line);
-write(STDOUT_FILENO, "\n", 1);  /* Print a newline before exiting on Ctrl+D */
-break;
+exit(0);
 }
 
-/* Remove newline character from input */
-if (line[read - 1] == '\n')
-line[read - 1] = '\0';
+args = parse_line(line);
+if (args[0] != NULL)
+execute_cmd(args);
 
-if (strlen(line) == 0)  /* Skip empty lines */
-continue;
-
-argv[0] = line;
-argv[1] = NULL;
-
-if (fork() == 0)  /* Create a child process */
-{
-execve(argv[0], argv, environ);  /* Execute the command */
-perror("./shell");  /* Print an error if execve fails */
-exit(EXIT_FAILURE);
-}
-else
-{
-wait(NULL);  /* Wait for the child process to finish */
-}
+free(args);
 }
 
+free(line);
 return (0);
 }
