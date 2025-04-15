@@ -19,7 +19,8 @@ exit(0);
 
 if (strcmp(args[0], "env") == 0)
 {
-for (int i = 0; environ[i]; i++)
+int i;
+for (i = 0; environ[i]; i++)
 printf("%s\n", environ[i]);
 return;
 }
