@@ -1,4 +1,4 @@
-.TH hsh 1 "April 2025" "Simple Shell Manual"
+uuuuu.TH hsh 1 "April 2025" "Simple Shell Manual"
 .SH NAME
 hsh \- simple shell command interpreter
 .SH SYNOPSIS
@@ -15,9 +15,11 @@ Handles commands and passes arguments properly.
 
 .TP
 .B Built-ins
-Supports built-in commands like:
-- exit
-- env
+Supports built-in commands:
+.IP \[bu] 2
+exit - Exits the shell
+.IP \[bu] 2
+env - Prints the environment variables
 
 .TP
 .B PATH Resolution
@@ -26,19 +28,26 @@ Uses the PATH environment variable to locate executables.
 .SH USAGE
 Interactive mode:
 .RS
-$ ./hsh
-($) ls -l
-($) exit
+$ ./hsh  
+($) ls -l  
+($) exit  
 .RE
 
 Non-interactive mode:
 .RS
-$ echo "ls" | ./hsh
+$ echo "ls" \| ./hsh
 .RE
 
+.SH RETURN VALUE
+Returns 0 on success, or 1 on error.
+
 .SH AUTHORS
-Bushraalshulail <Bushraalshulail@hotmail.com>
+Bushraalshulail <Bushraalshulail@hotmail.com>  
 Nada-Al-Shuraidah <10718@holbertonstudents.com>
 
 .SH BUGS
 No known bugs at this time.
+
+.SH SEE ALSO
+sh(1), bash(1), execve(2), fork(2)
+

@@ -11,4 +11,6 @@ char **parse_line(char *line);
 void execute_cmd(char **args);
 extern char **environ;
 
+char *find_path(char *command);
+
 #endif

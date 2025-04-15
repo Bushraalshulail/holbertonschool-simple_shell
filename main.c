@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the shell
- *
- * Return: Always 0
- */
+* main - Entry point of the shell
+*
+* Return: Always 0
+*/
 int main(void)
 {
 char *line = NULL;
@@ -18,14 +18,14 @@ if (isatty(STDIN_FILENO))
 write(STDOUT_FILENO, "($) ", 4);
 
 read = getline(&line, &len, stdin);
-if (read == -1)
+if (read == -1) /* Handle Ctrl+D */
 {
 free(line);
 exit(0);
 }
 
 args = parse_line(line);
-if (args[0] != NULL)
+if (args && args[0])
 execute_cmd(args);
 
 free(args);
