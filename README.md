@@ -1,14 +1,27 @@
 # Simple Shell
 
 ## Description
-This project implements a simple UNIX command line interpreter (shell). The shell reads commands from the user, executes them using the `execve` system call, and handles errors if the command is not found. It supports a basic prompt and handles the "end of file" condition (Ctrl+D).
+
+This project is a simple UNIX command line interpreter (shell), built in C, as part of the Holberton School curriculum. It mimics basic functionalities of standard shells such as `sh`, allowing the execution of commands in both interactive and non-interactive modes.
 
 ## Features
-- Display a prompt (`#cisfun$ `).
-- Wait for user input and execute commands.
-- Handle errors when commands are not found.
-- Process the "end of file" condition (Ctrl+D).
-- Does not handle advanced shell features like pipes, semicolons, or arguments.
+
+- Display a prompt (`$ `)
+- Wait for user input and execute commands
+- Handle commands with arguments
+- Use the `PATH` to locate executables
+- Built-in commands:
+- `exit` - exits the shell
+- `env` - prints the environment variables
+- Execute commands using `fork`, `execve`, and `wait`
+- Handle Ctrl+D (EOF)
+- Show error message when command is not found
+
+## Limitations
+
+- Does not support advanced features (pipes `|`, redirection `>`, background `&`, etc.)
 
 ## Compilation
-The shell is compiled with:
+
+```sh
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
