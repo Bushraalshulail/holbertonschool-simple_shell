@@ -1,0 +1,44 @@
+.TH hsh 1 "April 2025" "Simple Shell Manual"
+.SH NAME
+hsh \- simple shell command interpreter
+.SH SYNOPSIS
+.B hsh
+.SH DESCRIPTION
+.B hsh
+is a simple command-line interpreter that mimics the behavior of the standard UNIX shell.
+
+It reads commands from the standard input and executes them. It supports basic shell features including:
+
+.TP
+.B Commands with arguments
+Handles commands and passes arguments properly.
+
+.TP
+.B Built-ins
+Supports built-in commands like:
+- exit
+- env
+
+.TP
+.B PATH Resolution
+Uses the PATH environment variable to locate executables.
+
+.SH USAGE
+Interactive mode:
+.RS
+$ ./hsh
+($) ls -l
+($) exit
+.RE
+
+Non-interactive mode:
+.RS
+$ echo "ls" | ./hsh
+.RE
+
+.SH AUTHORS
+Bushraalshulail <Bushraalshulail@hotmail.com>
+Nada-Al-Shuraidah <10718@holbertonstudents.com>
+
+.SH BUGS
+No known bugs at this time.
