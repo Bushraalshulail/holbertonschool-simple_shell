@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <stdlib.h>
-#include <string.h>
 
 /**
 * split_line - Splits a line into an array of arguments (tokens)

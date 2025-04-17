@@ -23,12 +23,12 @@ int execute(char **args, char **env);
 char *find_path(char *command, char **env);
 void print_env(void);
 void print_error(char *command);
-char **tokenize(char *line);
 
 /* String utils */
-int _strlen(char *s);
-char *_strdup(char *str);
-int _strcmp(char *s1, char *s2);
+int _strlen(const char *s);
+char *_strdup(const char *str);
+int _strcmp(const char *s1, const char *s2);
+char *_strcpy(char *dest, const char *src);
 
 /* Memory management */
 void free_args(char **args);

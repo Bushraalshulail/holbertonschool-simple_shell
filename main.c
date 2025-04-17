@@ -14,6 +14,7 @@ char *line = NULL;
 char **args = NULL;
 int status = 1;
 (void)argc;
+(void)argv;
 
 while (1)
 {

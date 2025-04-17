@@ -9,18 +9,50 @@
 */
 char *find_path(char *command, char **env)
 {
-char *path = getenv("PATH");
-char *token;
-char full_path[1024];
+char *path = NULL, *token, *full_path;
+struct stat st;
+int i;
+
+if (command[0] == '/' || command[0] == '.')
+{
+if (stat(command, &st) == 0)
+return (_strdup(command));
+return (NULL);
+}
+
+for (i = 0; env[i]; i++)
+{
+if (_strncmp(env[i], "PATH=", 5) == 0)
+{
+path = _strdup(env[i] + 5);
+break;
+}
+}
+if (!path)
+return (NULL);
 
 token = strtok(path, ":");
-while (token != NULL)
+while (token)
 {
-snprintf(full_path, sizeof(full_path), "%s/%s", token, command);
-if (access(full_path, F_OK) == 0)
-return strdup(full_path);
+full_path = malloc(_strlen(token) + _strlen(command) + 2);
+if (!full_path)
+{
+free(path);
+return (NULL);
+}
+_strcpy(full_path, token);
+_strcat(full_path, "/");
+_strcat(full_path, command);
+
+if (stat(full_path, &st) == 0)
+{
+free(path);
+return (full_path);
+}
+free(full_path);
 token = strtok(NULL, ":");
 }
-return NULL;
+free(path);
+return (NULL);
 }
 

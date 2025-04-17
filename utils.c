@@ -1,5 +1,4 @@
-#include "utils.h"
-#include <stdlib.h>
+#include "shell.h"
 
 /**
 * _strlen - returns the length of a string
@@ -23,11 +22,12 @@ return (len);
 */
 int _strcmp(const char *s1, const char *s2)
 {
-int i = 0;
-
-while (s1[i] && s2[i] && s1[i] == s2[i])
-i++;
-return (s1[i] - s2[i]);
+while (*s1 && *s2 && *s1 == *s2)
+{
+s1++;
+s2++;
+}
+return (*s1 - *s2);
 }
 
 /**
@@ -67,5 +67,25 @@ for (i = 0; i <= len; i++)
 copy[i] = str[i];
 
 return (copy);
+}
+
+/**
+* _strncmp - compares n characters of two strings
+* @s1: string 1
+* @s2: string 2
+* @n: number of characters to compare
+* Return: difference
+*/
+int _strncmp(const char *s1, const char *s2, size_t n)
+{
+while (n && *s1 && *s2 && *s1 == *s2)
+{
+s1++;
+s2++;
+n--;
+}
+if (n == 0)
+return (0);
+return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
