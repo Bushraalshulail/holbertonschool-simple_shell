@@ -1,5 +1,21 @@
 #include "shell.h"
 
+
+char *_strcat(char *dest, const char *src)
+{
+int i = 0, j = 0;
+
+while (dest[i])
+i++;
+while (src[j])
+dest[i++] = src[j++];
+dest[i] = '\0';
+return (dest);
+}
+
+
+
+
 /**
 * _strlen - returns the length of a string
 * @s: the string
