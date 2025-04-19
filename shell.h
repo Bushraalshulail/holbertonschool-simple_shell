@@ -12,8 +12,5 @@ char **parse_line(char *line);
 int execute_cmd(char **args);
 extern char **environ;
 char *find_command(char *command);
-void handle_execution_errors(char *full_path, char **argv);
-void run_child_process(char *full_path, char **argv, char **env);
-void run_command(char *cmd, char **env);
 
 #endif
