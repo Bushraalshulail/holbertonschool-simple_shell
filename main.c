@@ -1,30 +1,41 @@
 #include "shell.h"
 
 /**
-* prompt_user - Displays the prompt if in interactive mode
+* print_prompt - Prints the prompt
 */
-void prompt_user(void)
+void print_prompt(void)
 {
 if (isatty(STDIN_FILENO))
 write(STDOUT_FILENO, "($) ", 4);
 }
 
 /**
-* handle_exit - Handles the exit command and frees memory
-* @line: The line buffer to free
-* @args: The arguments array to free
-* @status: The exit status
+* read_line - Reads a line from stdin
+* @line: Buffer to store the line
+* @len: Size of the buffer
+* Return: The number of characters read or -1 on error
 */
-void handle_exit(char *line, char **args, int status)
+ssize_t read_line(char **line, size_t *len)
 {
-int exit_status = status;
+return (getline(line, len, stdin));
+}
+
+/**
+* handle_exit - Handles the exit command
+* @args: Command arguments
+* @line: The input line
+* Return: Exit status
+*/
+int handle_exit(char **args, char *line)
+{
+int status = 0;
 
 if (args[1])
-exit_status = atoi(args[1]);
+status = atoi(args[1]);
 
 free(line);
 free(args);
-exit(exit_status);
+exit(status);
 }
 
 /**
@@ -41,9 +52,9 @@ int status = 0;
 
 while (1)
 {
-prompt_user();
+print_prompt();
 
-read = getline(&line, &len, stdin);
+read = read_line(&line, &len);
 if (read == -1)
 {
 free(line);
@@ -55,16 +66,22 @@ if (args[0] != NULL)
 {
 if (strcmp(args[0], "exit") == 0)
 {
-handle_exit(line, args, status);
+handle_exit(args, line);
 }
+else
+{
 status = execute_cmd(args);
 }
+}
+
 free(args);
+
 if (status == 2)
 {
 free(line);
 exit(2);
 }
 }
+
 return (status);
 }

@@ -1,70 +1,104 @@
 #include "shell.h"
 
 /**
-* prompt_user - Displays the prompt if in interactive mode
+* is_builtin - Checks and executes built-in commands
+* @args: Command and arguments
+* Return: 1 if built-in executed, 0 otherwise
 */
-void prompt_user(void)
+int is_builtin(char **args)
 {
-if (isatty(STDIN_FILENO))
-write(STDOUT_FILENO, "($) ", 4);
+if (strcmp(args[0], "env") == 0)
+{
+int i = 0;
+while (environ[i])
+printf("%s\n", environ[i++]);
+return (1);
+}
+return (0);
 }
 
 /**
-* handle_exit - Handles the exit command and frees memory
-* @line: The line buffer to free
-* @args: The arguments array to free
-* @status: The exit status
+* resolve_cmd_path - Resolves the full path of the command
+* @cmd: Command name
+* Return: Path if found and executable, NULL otherwise
 */
-void handle_exit(char *line, char **args, int status)
+char *resolve_cmd_path(char *cmd)
 {
-int exit_status = status;
+char *cmd_path = NULL;
 
-if (args[1])
-exit_status = atoi(args[1]);
+if (strchr(cmd, '/'))
+{
+if (access(cmd, X_OK) == 0)
+cmd_path = strdup(cmd);
+}
+else
+cmd_path = find_command(cmd);
 
-free(line);
-free(args);
-exit(exit_status);
+return (cmd_path);
 }
 
 /**
-* main - Entry point of the shell
-* Return: Always 0
+* run_cmd - Forks and executes the command
+* @cmd_path: Path to the executable
+* @args: Command and arguments
+* Return: Exit status of the command
 */
-int main(void)
+int run_cmd(char *cmd_path, char **args)
 {
-char *line = NULL;
-size_t len = 0;
-ssize_t read;
-char **args;
-int status = 0;
+pid_t pid;
+int status;
 
-while (1)
+pid = fork();
+if (pid == 0)
 {
-prompt_user();
-
-read = getline(&line, &len, stdin);
-if (read == -1)
+if (execve(cmd_path, args, environ) == -1)
 {
-free(line);
-exit(0);
+fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+free(cmd_path);
+exit(127);
+}
+}
+else if (pid < 0)
+{
+perror("fork");
+status = 1;
+}
+else
+{
+waitpid(pid, &status, 0);
+if (WIFEXITED(status))
+status = WEXITSTATUS(status);
+else
+status = 1;
 }
 
-args = parse_line(line);
-if (args[0] != NULL)
+return (status);
+}
+
+/**
+* execute_cmd - Main command execution handler
+* @args: Command and arguments
+* Return: Exit status
+*/
+int execute_cmd(char **args)
 {
-if (strcmp(args[0], "exit") == 0)
+char *cmd_path;
+int status;
+
+if (args[0] == NULL)
+return (0);
+
+if (is_builtin(args))
+return (0);
+
+cmd_path = resolve_cmd_path(args[0]);
+if (cmd_path == NULL)
 {
-handle_exit(line, args, status);
+fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+return (127);
 }
-status = execute_cmd(args);
-}
-free(args);
-if (status == 2)
-{
-free(line);
-exit(2);
-}
-}
+
+status = run_cmd(cmd_path, args);
+free(cmd_path);
 return (status);
 }
