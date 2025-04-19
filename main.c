@@ -1,44 +1,60 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the shell
- * Return: Always 0
- */
-int main(void)
+* main - Entry point for shell
+* @argc: Argument count (unused)
+* @argv: Argument vector
+* @env: Environment variables
+*
+* Return: Always 0
+*/
+int main(int argc, char **argv, char **env)
 {
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t read;
-	char **args;
-	int status = 0;
+char *line = NULL;
+char **args = NULL;
+int status = 1;
+(void)argc;
+(void)argv;
 
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "($) ", 4);
+while (1)
+{
+if (isatty(STDIN_FILENO))
+write(STDOUT_FILENO, "$ ", 2);
 
-		read = getline(&line, &len, stdin);
-		if (read == -1)
-		{
-			free(line);
-			exit(0);
-		}
+line = read_line();
+if (!line)
+{
+if (isatty(STDIN_FILENO))
+write(STDOUT_FILENO, "\n", 1);
+break;
+}
 
-		args = parse_line(line);
-		if (args[0] != NULL)
-		{
-			if (strcmp(args[0], "exit") == 0)
-			{
-				free(args);
-				free(line);
-				exit(0);
-			}
-			status = execute_cmd(args);
-		}
+args = split_line(line);
+if (!args || !args[0])
+{
+free(line);
+free_args(args);
+continue;
+}
 
-		free(args);
-	}
-	printf("OK\n");
-	free(line);
-	exit(status);
+if (_strcmp(args[0], "exit") == 0)
+{
+free(line);
+free_args(args);
+break;
+}
+else if (_strcmp(args[0], "env") == 0)
+{
+print_env();
+}
+else
+{
+status = execute(args, env);
+}
+
+free(line);
+free_args(args);
+}
+
+return (status);
 }
