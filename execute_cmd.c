@@ -89,7 +89,7 @@ return (0);
 
 int builtin_status = is_builtin(args);
 if (builtin_status != -1)
-return builtin_status;
+return (builtin_status);
 
 cmd_path = resolve_cmd_path(args[0]);
 if (cmd_path == NULL)
