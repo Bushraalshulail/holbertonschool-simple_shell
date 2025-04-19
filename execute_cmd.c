@@ -12,9 +12,9 @@ if (strcmp(args[0], "env") == 0)
 int i = 0;
 while (environ[i])
 printf("%s\n", environ[i++]);
-return (1);
-}
 return (0);
+}
+return (-1);
 }
 
 /**
@@ -87,8 +87,9 @@ int status;
 if (args[0] == NULL)
 return (0);
 
-if (is_builtin(args))
-return (0);
+int builtin_status = is_builtin(args);
+if (builtin_status != -1)
+return builtin_status;
 
 cmd_path = resolve_cmd_path(args[0]);
 if (cmd_path == NULL)
