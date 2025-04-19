@@ -30,7 +30,7 @@ else if (pid == 0)
 {
 execve(full_path, args, env);
 perror(args[0]);
-exit(EXIT_FAILURE);
+exit(127);
 }
 else
 {
