@@ -55,10 +55,10 @@ while (1)
 print_prompt();
 
 read = read_line(&line, &len);
-if (read == -1)
+if (read == -1)  /* EOF case (Ctrl+D) */
 {
 free(line);
-exit(0);
+exit(status);  /* Exit with the last recorded case */
 }
 
 args = parse_line(line);
@@ -70,17 +70,14 @@ handle_exit(args, line);
 }
 else
 {
-status = execute_cmd(args);
+status = execute_cmd(args);/* Save the exit status of the command execution */
 }
 }
 
 free(args);
-
-if (status == 2)
-{
-free(line);
-exit(2);
-}
+free(line); /* Freeing memory */
+line = NULL; /* Reset variable */
+len = 0; /* Reset buffer lemgth */
 }
 
 return (status);
