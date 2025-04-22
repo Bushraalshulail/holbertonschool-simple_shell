@@ -17,6 +17,7 @@ return (1);
 return (0);
 }
 
+
 /**
 * resolve_cmd_path - Resolves the full path of the command
 * @cmd: Command name
