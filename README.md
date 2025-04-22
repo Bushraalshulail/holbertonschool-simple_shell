@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a simple UNIX command line interpreter (shell), built in C, as part of the Holberton School curriculum.  
+This project is a simple UNIX command line interpreter (shell), built in C, as part of the Holberton School curriculum.
 It mimics basic functionalities of standard shells such as `sh`, allowing the execution of commands in both **interactive** and **non-interactive** modes.
 
 ## Features

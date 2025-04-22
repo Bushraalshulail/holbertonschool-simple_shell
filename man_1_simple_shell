@@ -28,9 +28,9 @@ Uses the PATH environment variable to locate executables.
 .SH USAGE
 Interactive mode:
 .RS
-$ ./hsh  
-($) ls -l  
-($) exit  
+$ ./hsh
+($) ls -l
+($) exit
 .RE
 
 Non-interactive mode:
@@ -42,7 +42,7 @@ $ echo "ls" \| ./hsh
 Returns 0 on success, or 1 on error.
 
 .SH AUTHORS
-Bushraalshulail <Bushraalshulail@hotmail.com>  
+Bushraalshulail <Bushraalshulail@hotmail.com>
 Nada-Al-Shuraidah <10718@holbertonstudents.com>
 
 .SH BUGS

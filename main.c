@@ -24,11 +24,12 @@ return (getline(line, len, stdin));
 * handle_exit - Handles the exit command
 * @args: Command arguments
 * @line: The input line
+* @last_status: The last exit status
 * Return: Exit status
 */
-int handle_exit(char **args, char *line)
+int handle_exit(char **args, char *line, int last_status)
 {
-int status = 0;
+int status = last_status;
 
 if (args[1])
 status = atoi(args[1]);
@@ -66,7 +67,7 @@ if (args[0] != NULL)
 {
 if (strcmp(args[0], "exit") == 0)
 {
-handle_exit(args, line);
+handle_exit(args, line, status);
 }
 else
 {
