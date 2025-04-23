@@ -1,29 +1,91 @@
-# Simple Shell - `hsh`
+# Simple Shell
 
-## 📚 Description
-
-This project is a **simple UNIX command line interpreter (shell)** developed in C as part of the Holberton School curriculum.  
-It replicates basic features of standard shells like `sh`, allowing the execution of commands in **interactive** and **non-interactive** modes.
+A lightweight, custom-built UNIX command-line interpreter written in C.  
+It replicates fundamental shell behavior including command parsing, execution, environment handling, and support for built-in commands.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 💬 Displays a prompt (`$ `)
-- ⌨️ Accepts and parses user input
-- ⚙️ Executes commands with arguments (e.g., `ls -l /tmp`)
-- 🌐 Resolves command paths using the `PATH` environment variable
-- 🧠 Built-in commands:
-  - `exit` – exits the shell
-  - `env` – displays current environment variables
-- 👶 Uses `fork`, `execve`, and `wait` to run processes
-- 🛑 Handles `Ctrl+D` (EOF) gracefully
-- 🚫 Shows an error message if command is not found
+- Custom shell prompt (`($)`)
+- Command execution using `execve`
+- PATH resolution for locating executables
+- Built-in commands: `exit`, `env`
+- Handles End-Of-File (Ctrl+D)
+- Supports both **interactive** and **non-interactive** modes
 
 ---
-## 🛠️ Compilation
 
-To compile the program, run:
+## Project Structure
+
+| File Name             | Description                                                  |
+|----------------------|--------------------------------------------------------------|
+| `main.c`             | Main loop and prompt logic                                   |
+| `parse_line.c`       | Splits user input into tokens                                |
+| `execute_command.c`  | Handles built-in check, command resolution, and forking      |
+| `find_command_path.c`| Resolves command paths using the environment `PATH`          |
+| `shell.h`            | Header file with global variables and function prototypes    |
+| `man_1_simple_shell` | Manual page for shell usage (see below)                      |
+| `AUTHORS`            | Project contributors                                         |
+
+---
+
+## Requirements
+
+- Ubuntu 20.04 LTS
+- GCC Compiler
+
+**Compilation:**
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+```
+
+---
+
+## Usage Examples
+
+### Interactive Mode
+```bash
+$ ./hsh
+($) ls -l
+($) /bin/echo Hello World
+($) env
+($) exit
+```
+
+### Non-Interactive Mode
+```bash
+$ echo "ls -l" | ./hsh
+$ cat script.sh | ./hsh
+```
+
+---
+
+## Manual Page
+
+You can access the shell manual using:
+
+```bash
+man ./man_1_simple_shell
+```
+
+---
+
+## Authors
+
+See the [AUTHORS](./AUTHORS) file for a full list of contributors.
+
+---
+
+## Notes
+
+- Shell supports whitespace trimming and tab separation.
+- If a command is not found, an appropriate error message is printed.
+- The shell exits with the last command's exit status.
+
+---
+
+## License
+
+This project is part of the Holberton School curriculum and intended for educational purposes.
