@@ -24,4 +24,3 @@ To compile the shell, use the following command:
 
 ```sh
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-
