@@ -50,9 +50,6 @@ free(path_copy);
 return (NULL);
 }
 
-
-
-
 /**
  * has_path_env - Checks if the PATH variable is present in the environment
  *
