@@ -1,26 +1,37 @@
-# Simple Shell - hsh
+# Simple Shell - `hsh`
 
-## Description
+## 📚 Description
 
-This project is a simple UNIX command line interpreter (shell), built in C, as part of the Holberton School curriculum.
-It mimics basic functionalities of standard shells such as `sh`, allowing the execution of commands in both **interactive** and **non-interactive** modes.
+This project is a **simple UNIX command line interpreter (shell)** developed in C as part of the Holberton School curriculum.  
+It replicates basic features of standard shells like `sh`, allowing the execution of commands in **interactive** and **non-interactive** modes.
 
-## Features
+---
 
-- Displays a prompt (`$ `)
-- Waits for user input and executes commands
-- Handles commands with arguments (e.g., `ls -l /tmp`)
-- Uses the `PATH` environment variable to locate executables
-- Built-in commands:
-  - `exit` - exits the shell
-  - `env` - prints the current environment variables
-- Executes commands using `fork`, `execve`, and `wait`
-- Handles `Ctrl+D` (EOF) gracefully
-- Displays an error message if a command is not found
+## 🚀 Features
 
-## Compilation
+- 💬 Displays a prompt (`$ `)
+- ⌨️ Accepts and parses user input
+- ⚙️ Executes commands with arguments (e.g., `ls -l /tmp`)
+- 🌐 Resolves command paths using the `PATH` environment variable
+- 🧠 Built-in commands:
+  - `exit` – exits the shell
+  - `env` – displays current environment variables
+- 👶 Uses `fork`, `execve`, and `wait` to run processes
+- 🛑 Handles `Ctrl+D` (EOF) gracefully
+- 🚫 Shows an error message if command is not found
 
-To compile the shell, use the following command:
+---
+## 🛠️ Compilation
 
-```sh
+To compile the program, run:
+
+```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+
+## Usage
+🔁 Interactive mode:
+
+$ ./hsh
+$ ls
+$ pwd
+$ exit
