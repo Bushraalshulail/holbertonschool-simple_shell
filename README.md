@@ -27,11 +27,3 @@ To compile the program, run:
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-
-## Usage
-🔁 Interactive mode:
-
-$ ./hsh
-$ ls
-$ pwd
-$ exit
